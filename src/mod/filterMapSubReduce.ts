@@ -21,7 +21,7 @@ export class FilterMapSubReduce extends NumberAlgorithm {
     let result: number = 0;
     
     for (let i = 0; i < this.getNumbers().length; i++) {
-      result = reduceFunction(-result, this.getNumbers()[i]);
+      result = reduceFunction(result, -this.getNumbers()[i]);
     }
 
     return result;

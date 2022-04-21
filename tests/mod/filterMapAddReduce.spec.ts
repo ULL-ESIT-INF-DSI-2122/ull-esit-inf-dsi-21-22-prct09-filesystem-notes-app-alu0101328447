@@ -1,24 +1,24 @@
 import 'mocha';
 import {expect} from 'chai';
-import { FilterMapSubReduce } from "../../src/mod/filterMapSubReduce";
+import { FilterMapAddReduce } from "../../src/mod/filterMapAddReduce";
 
-describe('Modificacion: clase FilterMapSubReduce Test', () => {
+describe('Modificacion: clase FilterMapAddReduce Test', () => {
   it('Se puede obtener el conjunto de numeros', () => {
     let numbers1: Array <number> = [0, 1, 2, 3];
-    let filter1: FilterMapSubReduce = new FilterMapSubReduce(numbers1);
+    let filter1: FilterMapAddReduce = new FilterMapAddReduce(numbers1);
 
     let numbers2: Array <number> = [2, 66, 88, 99, 33, 456];
-    let filter2: FilterMapSubReduce = new FilterMapSubReduce(numbers2);
+    let filter2: FilterMapAddReduce = new FilterMapAddReduce(numbers2);
 
     expect(filter1.getNumbers()).to.be.eql(numbers1);
     expect(filter2.getNumbers()).to.be.eql(numbers2);
   });
   it('Se puede filtrar los numeros del array', () => {
     let numbers1: Array <number> = [0, 1, 2, 3];
-    let filter1: FilterMapSubReduce = new FilterMapSubReduce(numbers1);
+    let filter1: FilterMapAddReduce = new FilterMapAddReduce(numbers1);
 
     let numbers2: Array <number> = [2, 66, 88, 99, 33, 456];
-    let filter2: FilterMapSubReduce = new FilterMapSubReduce(numbers2);
+    let filter2: FilterMapAddReduce = new FilterMapAddReduce(numbers2);
 
 
     let filter: Function = function(a) {return a < 3;};
@@ -28,10 +28,10 @@ describe('Modificacion: clase FilterMapSubReduce Test', () => {
   });
   it('Se pueden transformar los valores del conjunto de numeros', () => {
     let numbers1: Array <number> = [0, 1, 2, 3];
-    let filter1: FilterMapSubReduce = new FilterMapSubReduce(numbers1);
+    let filter1: FilterMapAddReduce = new FilterMapAddReduce(numbers1);
 
     let numbers2: Array <number> = [2, 66, 88, 99, 33, 456];
-    let filter2: FilterMapSubReduce = new FilterMapSubReduce(numbers2);
+    let filter2: FilterMapAddReduce = new FilterMapAddReduce(numbers2);
 
 
     let maping: Function = function(a) {return a * 2;};
@@ -42,13 +42,13 @@ describe('Modificacion: clase FilterMapSubReduce Test', () => {
 
   it('Se pueden reducir los valores del conjunto de numeros a un solo numero', () => {
     let numbers1: Array <number> = [0, 1, 2, 3];
-    let filter1: FilterMapSubReduce = new FilterMapSubReduce(numbers1);
+    let filter1: FilterMapAddReduce = new FilterMapAddReduce(numbers1);
 
     let numbers2: Array <number> = [2, 66, 88, 99, 33, 456];
-    let filter2: FilterMapSubReduce = new FilterMapSubReduce(numbers2);
+    let filter2: FilterMapAddReduce = new FilterMapAddReduce(numbers2);
 
 
-    let maping: Function = function(a, b) {return a - b;};
+    let maping: Function = function(a, b) {return a + b;};
 
     expect(filter1.reduce(maping)).to.be.eql(6);
     expect(filter2.reduce(maping)).to.be.eql(744);
