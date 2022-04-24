@@ -1,9 +1,8 @@
 import yargs from 'yargs';
 import {writeFile, existsSync, mkdirSync, unlinkSync, readdirSync ,readFile} from 'fs';
-import {ColorText} from './colorText';
+import {ColorText, getTextColor} from './colorText';
 import chalk from 'chalk';
 
-console.log("Exe 1");
 
 // Add - read - list - remove
 yargs.command({
@@ -142,55 +141,109 @@ yargs.command({
     if (typeof argv.user === 'string') {
       // Direccion del archivo
       let dir: string = `./notes/${argv.user}/`;
-      let printableTitles: string[] = [];
-
+      
       // Escritura del archivo
       // Si el archivo existe da error
       if (existsSync(dir)) {
         let dirs = readdirSync(dir);
-        dirs.forEach(title => {
-          let direction = dir + title;
-          readFile(direction, (err, data) => {
-            if (err) {
-              console.log('There must be a problem with the file you are trying to read');
-            } else {
-              if (chalk.blue(chalk.reset(data.toString())) === data.toString()) { 
-                // Azul
-                printableTitles.push(chalk.blue(argv.title));
-              } else if (chalk.red(chalk.reset(data.toString())) === data.toString()) {
-                // Rojo
-                printableTitles.push(chalk.red(argv.title));
-              } else if (chalk.green(chalk.reset(data.toString())) === data.toString()) {
-                // Verde
-                printableTitles.push(chalk.green(argv.title));
-              } else if (chalk.yellow(chalk.reset(data.toString())) === data.toString()) {
-                // Amarillo
-                printableTitles.push(chalk.yellow(argv.title));
+        if (dirs.length > 0) {
+          dirs.forEach(title => {
+            let direction = dir + title;
+            readFile(direction, (err, data) => {
+              if (err) {
+                console.log('There must be a problem with the file you are trying to read');
               } else {
-                // Error
-                printableTitles.push(chalk.reset(argv.title));
+                switch(getTextColor(data.toString())) {
+                  case "blue": 
+                    console.log(chalk.blue(title));
+                    break;
+
+                  case "red": 
+                    console.log(chalk.red(title));
+                    break;
+
+                  case "green": 
+                    console.log(chalk.green(title));
+                    break;
+
+                  case "yellow": 
+                    console.log(chalk.yellow(title));
+                    break;
+
+                  default: 
+                    console.log(title);
+                    break;
+                }
               }
-            }
+            });
           });
-        });
-
-        
-        if (printableTitles.length === 0) {
-          console.log(`El usuario ${argv.user} no tiene ninguna nota`);
         } else {
-          printableTitles.forEach(title => { 
-            console.log(`${title}`);
-          });
+          console.log(`El usuario ${argv.user} no tiene ninguna nota`);
         }
-
 
       } else {
         console.log(`ERROR: El usuario ${argv.user} no existe`);
       }
     }
   }
-});
+})
+.command({
+  command: 'read',
+  describe: 'Read a note',
+  builder: {
+    user: {
+      describe: 'Owner user',
+      demandOption: true,
+      type: 'string',
+    },
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string',
+    },
+  },
+  handler(argv) {
+    if ((typeof argv.title === 'string') && (typeof argv.user === 'string')) {
+      // Direccion del archivo
+      let dir: string = `./notes/${argv.user}/${argv.title}`;
+      
+      // Escritura del archivo
+      // Si el archivo existe da error
+      if (existsSync(dir)) {
+        readFile(dir, (err, data) => {
+          if (err) {
+            console.log('There must be a problem with the file you are trying to read');
+          } else {
+            // Imprimo el titulo
+            switch(getTextColor(data.toString())) {
+              case "blue": 
+                console.log(chalk.blue(argv.title));
+                break;
+
+              case "red": 
+                console.log(chalk.red(argv.title));
+                break;
+
+              case "green": 
+                console.log(chalk.green(argv.title));
+                break;
+
+              case "yellow": 
+                console.log(chalk.yellow(argv.title));
+                break;
+
+              default: 
+                console.log(argv.title);
+                break;
+            }
+
+            // Datos
+            console.log(data.toString());
+          }
+        });
+      }
+    }
+  }
+})
 
 yargs.parse();
-
-console.log("Exe 2");
