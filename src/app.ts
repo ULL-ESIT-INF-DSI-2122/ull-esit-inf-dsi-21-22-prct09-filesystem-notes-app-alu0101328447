@@ -44,7 +44,7 @@ yargs.command({
       // Escritura del archivo
       // Si el archivo existe da error
       if (existsSync(dir)) {
-        console.log(`ERROR: El archivo ${argv.title} ya existe`);
+        console.log(chalk.red(`ERROR: El archivo ${argv.title} ya existe`));
       } else {
         writeFile(dir, ColorText(argv.body, argv.color), () => {
           console.log(`File ${argv.title} has just been created`);
@@ -88,10 +88,10 @@ yargs.command({
       // Si el archivo existe da error
       if (existsSync(dir)) {
         writeFile(dir, ColorText(argv.body, argv.color), () => {
-          console.log(`File ${argv.title} has just been modified`);
+          console.log(chalk.green(`File ${argv.title} has just been modified`));
         });
       } else {
-        console.log(`ERROR: El archivo ${argv.title} no existe`);
+        console.log(chalk.red(`ERROR: El archivo ${argv.title} no existe`));
       }
     }
   }
@@ -120,9 +120,9 @@ yargs.command({
       // Si el archivo existe da error
       if (existsSync(dir)) {
         unlinkSync(dir)
-        console.log(`File ${argv.title} has just been deleted`);
+        console.log(chalk.green(`File ${argv.title} has just been deleted`));
       } else {
-        console.log(`ERROR: El archivo ${argv.title} no existe`);
+        console.log(chalk.red(`ERROR: El archivo ${argv.title} no existe`));
       }
     }
   }
@@ -178,11 +178,11 @@ yargs.command({
             });
           });
         } else {
-          console.log(`El usuario ${argv.user} no tiene ninguna nota`);
+          console.log(chalk.green(`El usuario ${argv.user} no tiene ninguna nota`));
         }
 
       } else {
-        console.log(`ERROR: El usuario ${argv.user} no existe`);
+        console.log(chalk.red(`ERROR: El usuario ${argv.user} no existe`));
       }
     }
   }
@@ -246,4 +246,11 @@ yargs.command({
   }
 })
 
-yargs.parse();
+
+// Inicio y comprobacion de la carpeta notes
+if (!existsSync(`./notes/`)) {
+  mkdirSync(`./notes`);
+  yargs.parse();
+} else {
+  yargs.parse();
+}

@@ -8,6 +8,7 @@ import chalk from 'chalk';
  * blue
  */
 export function ColorText(text: string, color: string): string {
+  
   switch(color) {
 
     case 'red': 
@@ -36,16 +37,17 @@ export function ColorText(text: string, color: string): string {
 
 
 export function getTextColor(text: string): string {
-  if (chalk.blue(text).valueOf() == text) { 
+  
+  if (chalk.blue(text) == text) { 
     // Azul
     return "blue";
-  } else if (chalk.red(text.valueOf() == text)) {
+  } else if (chalk.red(text) == text) {
     // Rojo
     return "red";
-  } else if (chalk.green(text).valueOf() == text) {
+  } else if (chalk.green(text) == text) {
     // Verde
     return "green";
-  } else if (chalk.yellow(text).valueOf() == text) {
+  } else if (chalk.yellow(text)  == text) {
     // Amarillo
     return "yellow";
   }
