@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "coverage": "nyc npm test && nyc report --reporter=lcov",
-    "start": "tsc-watch --onSuccess \"node dist/FILE.js\"",
+    "start": "tsc-watch --onSuccess \"node dist/ejercicio-01/index.js\"",
     "doc": "typedoc"
   },
   "keywords": [],
@@ -15,6 +15,7 @@
   "devDependencies": {
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
+    "@types/node": "^17.0.25",
     "@types/yargs": "^17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
